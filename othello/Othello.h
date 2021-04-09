@@ -1,11 +1,16 @@
 #pragma once
 #include <iostream>
 using namespace std;
-#include "Player.h"
+#ifndef Othello.h
+#define Othello.h
+
+#define P1 "1" // blanc
+#define P2 "2" // noir
+#define vide "0"
 
 class Othello {
 private:
-	int pos_actuel[8][8];
+	int board[8][8];
 	int score_noir;
 	int score_blanc;
 	bool finished;
@@ -18,3 +23,6 @@ public:
 	bool jeu_termine();
 	Player gagnant();
 };
+
+
+#endif
