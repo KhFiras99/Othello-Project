@@ -1,22 +1,25 @@
 #pragma once
+
 #include <iostream>
+
+#include "Othello.h"
+
 #include <string>
+
 using namespace std;
 
+#ifndef PLAYER_H 
+#define PLAYER_H	
 class Player {
 private:
 	string couleur;
 	int score;
 public:
-	Player();
+	Player(string col);
 	~Player();
 	string getColor();
 	int getScore();
-	void setScore(int score);
+	void setScore(int);
 	void affiche();
-	void choisir();
-	void move();
-	bool blocage();
-	bool mouvement_permis();
-	friend bool jeu_termine();
 };
+#endif

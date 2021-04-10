@@ -1,14 +1,17 @@
 #include <iostream>
-
-class Case{
-    private:
+/*
+class Case {
+private:
     int ligne;
-    int colone;
-    public:
+    int colonne;
+    int value;
+public:
     Case();
+    Case(int, int, int);
     ~Case();
     int getLine();
     int getColonne();
-    int Value();
-    
+    int getValue();
+    void operator=(const Case& C);
 };
+*/
