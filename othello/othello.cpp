@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <stdlib.h>
 #include "Othello.h"
 using namespace std;
 
@@ -10,16 +10,19 @@ Othello::Othello(){
     {
         for (int j = 0; j < 8; j++)
         {
-            if ((i == 3 && j == 3) || (i == 4 && j == 4)){
-                board[i][j] = 1;
+            if ((i == 3 && j == 3) || (i== 4 && j == 4)){
+                board[i][i] = noir
+                    ;
             }
-            if ((i == 3 && j == 4) || (i == 4 && j == 3)) {
-                board[i][j] = 2;
+            else if ((i == 3 && j == 4) || (i == 4 && j == 3)) {
+                board[i][j] = blanc
+                    ;
             }
             else {
-                board[i][j] = 0;
+                board[i][j] = vide;
             }
-            lbord[i][j] = false; // initialistation de la table lbord 
+            lbord[i][j] = true; // initialistation de la table lbord 
+
         }
     }
 	turn = noir;
@@ -54,20 +57,26 @@ void Othello::jeu_termine() {
     }
 }
 void Othello::printBoard() {
-    cout << endl << endl;
-    cout << "\t                       OTHELLO\n";
-    cout << "\n\t     0     1     2     3     4     5     6     7  ";
-    cout << "\n\t  -----*-----*-----*-----*-----*-----*-----*-----";
-    for (int r = 0; r < 8; r++) {
-        cout << "\n\t  |     |     |     |     |     |     |     |     |\n";
-        for (int i = 0; i < 8; i++) {
-            cout << board[r][i];
+    cout << "Board OTHELLO" << endl;
+    for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+            cout << board[i][j];
         }
-        cout << "\n\t  |     |     |     |     |     |     |     |     |";
-        cout << "\n\t  -----*-----*-----*-----*-----*-----*-----*-----";
-
+        cout << "\n";
     }
-    cout << "\n\t     0     1     2     3     4     5     6     7  \n";
-    cout << "\n\t     Black's Score: " << score_noir << "\t\t";
-    cout << "White's Score: " << score_blanc << endl << endl << endl;
+}
+void Othello::move(){
+    char lg;
+    char col;
+    int i;
+    int j;
+    cout << "entrez la ligne: ";
+    cin >> lg;
+    cout << "entre la colonne: ";
+    cin >> col;
+    i = lg - 49;
+    j = col - 49;
+    if (mouvement_legal(i,j)) {
+        board[i][j] = turn;
+    }
 }
