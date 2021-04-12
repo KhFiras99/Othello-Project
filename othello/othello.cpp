@@ -70,7 +70,10 @@ void Othello::move(){
     char col;
     int i;
     int j;
+<<<<<<< HEAD
     cout << "tour du pion " << turn << endl;
+=======
+>>>>>>> 8efd1a2c268a7ea42f872a850714b0f24dbbafe1
     cout << "entrez la ligne: ";
     cin >> lg;
     cout << "entre la colonne: ";
