@@ -1,0 +1,2 @@
+C:\Users\asus\Desktop\cour 1 er Ensi\2 eme semestre\Projet de Programmation\Othello-Project\Othello-Project\othello\Debug\Othello-game.exe
+C:\Users\asus\Desktop\cour 1 er Ensi\2 eme semestre\Projet de Programmation\Othello-Project\Othello-Project\othello\Debug\Othello-game.pdb
