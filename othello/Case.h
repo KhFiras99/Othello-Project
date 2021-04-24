@@ -1,17 +1,18 @@
 #include <iostream>
-/*
+using namespace std;
+
 class Case {
 private:
-    int ligne;
-    int colonne;
-    int value;
+    char value;
 public:
     Case();
-    Case(int, int, int);
+    Case(char);
     ~Case();
-    int getLine();
-    int getColonne();
-    int getValue();
+    char getValue();
+    void setValue(char);
     void operator=(const Case& C);
+    friend ostream& operator<<(ostream& flot, Case C) {
+        flot << C.value;
+        return flot;
+    }
 };
-*/

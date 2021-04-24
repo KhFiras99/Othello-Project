@@ -1,0 +1,8 @@
+﻿  Othello.cpp
+  Player.cpp
+  main.cpp
+C:\Othello\Othello-Project\othello\main.cpp(10,16): error C2660: 'Othello::move' : la fonction ne prend pas 0 arguments
+C:\Othello\Othello-Project\othello\Othello.h(30,6): message : voir la déclaration de 'Othello::move'
+C:\Othello\Othello-Project\othello\main.cpp(13,16): error C2660: 'Othello::move' : la fonction ne prend pas 0 arguments
+C:\Othello\Othello-Project\othello\Othello.h(30,6): message : voir la déclaration de 'Othello::move'
+  Génération de code en cours...

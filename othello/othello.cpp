@@ -11,21 +11,20 @@ Othello::Othello(){
         for (int j = 0; j < 8; j++)
         {
             if ((i == 3 && j == 3) || (i== 4 && j == 4)){
-                board[i][i] = noir
-                    ;
+                board[i][j].setValue('1');
             }
             else if ((i == 3 && j == 4) || (i == 4 && j == 3)) {
-                board[i][j] = blanc
-                    ;
+                board[i][j].setValue('2');
             }
             else {
-                board[i][j] = vide;
+                board[i][j].setValue('-');
             }
-            lbord[i][j] = true; // initialistation de la table lbord 
+            lbord[i][j] = false; // initialistation de la table lbord 
 
         }
     }
 	turn = noir;
+	update_mouvement_legal();
 	score_blanc = 2;
 	score_noir = 2;
 	finished = false;
@@ -45,16 +44,26 @@ void Othello::passe_tour() {
 }
 bool Othello::pass() {
     passe_tour();
-    if (nblegalmoves == 0 ) {
+	update_mouvement_legal();
+    if (nblegalmoves == 0 ){
         finished = true;
         return false;
     }
     return true;
+
 }
-void Othello::jeu_termine() {
+bool Othello::mouvement_legal(int i, int j)
+{
+	return lbord[i][j];
+}
+
+
+bool Othello::jeu_termine() {
     if (finished == true) {
-        cout << "Jeu Terminée  ";
-    }
+        cout << "Jeu Terminée";
+		return true;
+	}
+	return false;
 }
 void Othello::printBoard() {
     cout << "Board OTHELLO" << endl;
@@ -65,22 +74,131 @@ void Othello::printBoard() {
         cout << "\n";
     }
 }
-void Othello::move(){
-    char lg;
-    char col;
-    int i;
-    int j;
-<<<<<<< HEAD
-    cout << "tour du pion " << turn << endl;
-=======
->>>>>>> 8efd1a2c268a7ea42f872a850714b0f24dbbafe1
-    cout << "entrez la ligne: ";
-    cin >> lg;
-    cout << "entre la colonne: ";
-    cin >> col;
-    i = lg - 49;
-    j = col - 49;
-    if (mouvement_legal(i,j)) {
-        board[i][j] = turn;
-    }
+
+void Othello::gagnant()
+{
+	if (score_noir > score_blanc)
+		cout << "Le joueur noir a gagné avec un score de: " << score_noir << endl;
+	else
+		cout << "Le joueur blanc a gagné avec un score de: " << score_blanc << endl;
+}
+
+int Othello::move(char r, char c) {
+	char color, opp_color;
+	int i, j, n_flipped = 0;
+
+	color = turn;
+	(color == noir) ? opp_color = blanc : opp_color = noir;
+
+	if (!lbord[r][c]) { cout << "Illegal move!" << endl; return 0; }
+	//Update board
+	board[r][c]= color;
+	//Check to the left
+	if (c - 2 >= 0 && board[r][c - 1].getValue() == opp_color) {
+		for (j = c - 2; j > 0 && board[r][j].getValue() == opp_color; j--) { ; } //NO_OP	
+		if (board[r][j].getValue() == color) { while (++j < c) { board[r][j]= color; n_flipped++; } }
+	}
+	//Check to the right
+	if (c + 2 <= 7 && board[r][c + 1].getValue() == opp_color) {
+		for (j = c + 2; j < 7 && board[r][j].getValue() == opp_color; j++) { ; } //NO_OP	
+		if (board[r][j].getValue() == color) { while (--j > c) { board[r][j] = color; n_flipped++; } }
+	}
+	//Check directly up
+	if (r - 2 >= 0 && board[r - 1][c].getValue() == opp_color) {
+		for (i = r - 2; i > 0 && board[i][c].getValue() == opp_color; i--) { ; } //NO_OP	
+		if (board[i][c].getValue() == color) { while (++i < r) { board[i][c]= color; n_flipped++; } }
+	}
+	//Check directly down
+	if (r + 2 <= 7 && board[r + 1][c].getValue() == opp_color) {
+		for (i = r + 2; i < 7 && board[i][c].getValue() == opp_color; i++) { ; } //NO_OP	
+		if (board[i][c].getValue() == color) { while (--i > r) { board[i][c]= color; n_flipped++; } }
+	}
+	//Check up and to the left
+	if (r - 2 >= 0 && c - 2 >= 0 && board[r - 1][c - 1].getValue() == opp_color) {
+		for (i = r - 2, j = c - 2; i > 0 && j > 0 && board[i][j].getValue() == opp_color; i--, j--) { ; } //NO_OP	
+		if (board[i][j].getValue() == color) { while (++i < r) { board[i][++j]= color; n_flipped++; } }
+	}
+	//Check up and to the right
+	if (r - 2 >= 0 && c + 2 <= 7 && board[r - 1][c + 1].getValue() == opp_color) {
+		for (i = r - 2, j = c + 2; i > 0 && j < 7 && board[i][j].getValue() == opp_color; i--, j++) { ; } //NO_OP	
+		if (board[i][j].getValue() == color) { while (++i < r) { board[i][--j]= color; n_flipped++; } }
+	}
+	//Check down and to the left
+	if (r + 2 <= 7 && c - 2 >= 0 && board[r + 1][c - 1].getValue() == opp_color) {
+		for (i = r + 2, j = c - 2; i < 7 && j>0 && board[i][j].getValue() == opp_color; i++, j--) { ; } //NO_OP	
+		if (board[i][j].getValue() == color) { while (--i > r) { board[i][++j]= color; n_flipped++; } }
+	}
+	//Check down and to the right
+	if (r + 2 <= 7 && c + 2 <= 7 && board[r + 1][c + 1].getValue() == opp_color) {
+		for (i = r + 2, j = c + 2; i < 7 && j < 7 && board[i][j].getValue() == opp_color; i++, j++) { ; } //NO_OP	
+		if (board[i][j].getValue() == color) { while (--i > r) { board[i][--j]= color; n_flipped++; } }
+	}
+	//Update turn counter
+	turn = opp_color;
+	//update legal moves
+	update_mouvement_legal();
+	//update number of pieces of each color
+	if (color == noir) { score_noir += n_flipped + 1; score_blanc -= n_flipped; }
+	else { score_noir -= n_flipped; score_blanc += n_flipped + 1; }
+	return n_flipped;
+}
+
+
+int Othello::update_mouvement_legal() {
+	int r, c, i, j;
+	char color, opp_color;
+	int n_moves = 0;
+
+	color = turn;
+	(color == noir) ? opp_color = blanc : opp_color = vide;
+
+	for (r = 0; r < 8; r++) {
+		for (c = 0; c < 8; c++) {
+			lbord[r][c] = false;
+			//Check that position is open
+			if (board[r][c].getValue() != '-') continue;	 //check next (r,c)
+			//Check to the left
+			if (c - 2 >= 0 && board[r][c - 1].getValue() == opp_color) {
+				for (j = c - 2; j > 0 && board[r][j].getValue() == opp_color; j--) { ; } //NO_OP	
+				if (board[r][j].getValue() == color) { lbord[r][c] = true; n_moves++; continue; }
+			}
+			//Check to the right
+			if (c + 2 <= 7 && board[r][c + 1].getValue() == opp_color) {
+				for (j = c + 2; j < 7 && board[r][j].getValue() == opp_color; j++) { ; } //NO_OP	
+				if (board[r][j].getValue() == color) { lbord[r][c] = true; n_moves++; cout << "hello???????????????,"<<endl; continue; }
+			}
+			//Check directly up
+			if (r - 2 >= 0 && board[r - 1][c].getValue() == opp_color) {
+				for (i = r - 2; i > 0 && board[i][c].getValue() == opp_color; i--) { ; } //NO_OP	
+				if (board[i][c].getValue() == color) { lbord[r][c] = true; n_moves++; continue; }
+			}
+			//Check directly down
+			if (r + 2 <= 7 && board[r + 1][c].getValue() == opp_color) {
+				for (i = r + 2; i < 7 && board[i][c].getValue() == opp_color; i++) { ; } //NO_OP	
+				if (board[i][c].getValue() == color) { lbord[r][c] = true; n_moves++; continue; }
+			}
+			//Check up and to the left
+			if (r - 2 >= 0 && c - 2 >= 0 && board[r - 1][c - 1].getValue() == opp_color) {
+				for (i = r - 2, j = c - 2; i > 0 && j > 0 && board[i][j].getValue() == opp_color; i--, j--) { ; } //NO_OP	
+				if (board[i][j].getValue() == color) { lbord[r][c] = true; n_moves++; continue; }
+			}
+			//Check up and to the right
+			if (r - 2 >= 0 && c + 2 <= 7 && board[r - 1][c + 1].getValue() == opp_color) {
+				for (i = r - 2, j = c + 2; i > 0 && j < 7 && board[i][j].getValue() == opp_color; i--, j++) { ; } //NO_OP	
+				if (board[i][j].getValue() == color) { lbord[r][c] = true; n_moves++; continue; }
+			}
+			//Check down and to the left
+			if (r + 2 <= 7 && c - 2 >= 0 && board[r + 1][c - 1].getValue() == opp_color) {
+				for (i = r + 2, j = c - 2; i < 7 && j>0 && board[i][j].getValue() == opp_color; i++, j--) { ; } //NO_OP	
+				if (board[i][j].getValue() == color) { lbord[r][c] = true; n_moves++; continue; }
+			}
+			//Check down and to the right
+			if (r + 2 <= 7 && c + 2 <= 7 && board[r + 1][c + 1].getValue() == opp_color) {
+				for (i = r + 2, j = c + 2; i < 7 && j < 7 && board[i][j].getValue() == opp_color; i++, j++) { ; } //NO_OP	
+				if (board[i][j].getValue() == color) { lbord[r][c] = true; n_moves++; continue; }
+			}
+		}
+	}
+	nblegalmoves = n_moves;
+	return n_moves;
 }

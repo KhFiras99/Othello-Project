@@ -7,10 +7,12 @@ using namespace std;
 int main()
 {
     Othello table;
-    table.move();
-    table.printBoard();
-    table.passe_tour();
-    table.move();
-    table.printBoard();
+
+    while (!table.jeu_termine()){
+        table.move('4', '6');
+        table.printBoard();
+        table.passe_tour();
+    }
+    table.gagnant();
     return 0;
 }
