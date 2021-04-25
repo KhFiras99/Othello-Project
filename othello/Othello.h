@@ -23,11 +23,12 @@ private:
 public:
 	Othello();
 	~Othello();
+	int getnblegalmove() {return nblegalmoves; }
 	void passe_tour();  // tour de role 
 	bool pass(); // forcer le passage de tour de role (return true si le joueur doit passer et false si le jeu est fini )
 	bool mouvement_legal(int, int);
-	int update_mouvement_legal();
-	int move(char,char);
+	void update_mouvement_legal();
+	void move(int,int);
 	bool jeu_termine(); // declencher la fin du jeu 
 	void printBoard();
 	void gagnant();
