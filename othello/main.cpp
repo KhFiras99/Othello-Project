@@ -7,14 +7,22 @@ using namespace std;
 int main()
 {
     int L, C;
+    cout << "----------------------     Board OTHELLO   ------------------------" << endl;
+    cout << endl;
+
     Othello table;
 
     while (!table.jeu_termine()){
-        cout << "Entrez la ligne :";
-        cin >> L;
-        cout << "\nEntrez la colonne :";
-        cin >> C;
-        table.move(--L,--C);
+        do {
+            cout << "Entrez: la ligne :";
+            cin >> L;
+        } while (L > 7);
+        do {
+            cout << "        la colonne :";
+            cin >> C;
+        } while (C > 7);
+
+        table.move(L,C);
         table.update_mouvement_legal();
         table.printBoard();
         cout << "Le nombre de mouvements legales pour ce tour est: " << table.getnblegalmove() << endl;

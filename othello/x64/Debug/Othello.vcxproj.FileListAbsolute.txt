@@ -1,1 +1,2 @@
 C:\Othello\Othello-Project\othello\x64\Debug\Othello.exe
+C:\ENSI 2\Othello\Othello-Project\othello\x64\Debug\Othello.exe
