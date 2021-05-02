@@ -27,8 +27,8 @@ Othello::Othello(){
 	score_noir = 2;
 
 	finished = false;
-    printBoard();
 	update_mouvement_legal();
+    printBoard();
 
 }
 Othello::~Othello() {
@@ -36,6 +36,17 @@ Othello::~Othello() {
 }
 
 void Othello::passe_tour() {
+	
+	for (int n = 0; n < 8; n++)
+	{
+		for (int m = 0; m < 8; m++) {
+			lbord[n][m] = false;
+			if (board[n][m].getValue() == 'x') {
+				board[n][m].setValue('-');
+			}
+		}
+	}
+
     if (turn == noir) {
         turn = blanc;
     }
@@ -43,16 +54,13 @@ void Othello::passe_tour() {
         turn = noir;
     }
 }
-bool Othello::pass() {
-    passe_tour();
-	update_mouvement_legal();
+void Othello::pass() {
     if (nblegalmoves == 0 ){
         finished = true;
-        return false;
     }
-    return true;
-
 }
+
+
 bool Othello::mouvement_legal(int i, int j)
 {
 	return lbord[i][j];
@@ -73,6 +81,16 @@ void Othello::printBoard() {
 	cout << "-------------------------------------------------------------------" << endl;
 	cout << endl;
 	cout << endl;
+
+	
+	for (int n = 0; n < 8; n++)
+	{
+		for (int m = 0; m < 8; m++) {
+			cout << lbord[n][m];
+		}
+		cout << "\n";
+	}
+
 
 	cout << "                      0  1  2  3  4  5  6  7" << endl;
 	cout << "                    .------------------------." << endl;
@@ -119,7 +137,7 @@ void Othello::move(int r, int c) {
 	}
 	else
 	{			//board[r][c].getValue() == vide
-		if (board[r][c].getValue() == 'x' ) {
+		if (board[r][c].getValue() == 'x') {
 			//Update board
 			//Check to the left
 			if (c - 2 >= 0 && board[r][c - 1].getValue() == opp_color) {
@@ -162,8 +180,14 @@ void Othello::move(int r, int c) {
 				if (board[i][j].getValue() == color) { while (--i > r) { board[i][--j] = color; n_flipped++; } }
 			}
 
+
 			board[r][c] = color;
+
 			passe_tour();
+
+			update_mouvement_legal();
+
+			pass();
 
 			//update number of pieces of each color
 			if (color == noir) { score_noir += n_flipped + 1; score_blanc -= n_flipped; }
@@ -176,11 +200,6 @@ void Othello::move(int r, int c) {
 
 
 	//Update turn counter
-	
-	//turn = opp_color;
-
-
-
 }
 
 void Othello::update_mouvement_legal() {
@@ -188,8 +207,15 @@ void Othello::update_mouvement_legal() {
 	char color, opp_color;
 	int n_moves = 0;
 
-	color = turn; //noir
-	(color == noir) ? opp_color = blanc : opp_color = vide;
+	color = turn;
+
+	if (color == noir) {
+		opp_color = blanc;
+	}
+	else
+		opp_color = noir;
+
+
 
 	for (r = 0; r < 8; r++) {
 		for (c = 0; c < 8; c++) {
@@ -232,11 +258,12 @@ void Othello::update_mouvement_legal() {
 			}
 			//Check down and to the right
 			if (r + 2 <= 7 && c + 2 <= 7 && board[r + 1][c + 1].getValue() == opp_color) {
-				for (i = r + 2, j = c + 2; i < 7 && j < 7 && board[i][j].getValue() == opp_color; i++ , j++) { ; } //NO_OP	
+				for (i = r + 2, j = c + 2; i < 7 && j < 7 && board[i][j].getValue() == opp_color; i++, j++) { ; } //NO_OP	
 				if (board[i][j].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('x'); n_moves++; continue; }
 			}
 		}
 	}
-	nblegalmoves = n_moves;
+
+	nblegalmoves = n_moves;	
 	//return n_moves;
 }

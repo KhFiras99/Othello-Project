@@ -25,7 +25,7 @@ public:
 	~Othello();
 	int getnblegalmove() {return nblegalmoves; }
 	void passe_tour();  // tour de role 
-	bool pass(); // forcer le passage de tour de role (return true si le joueur doit passer et false si le jeu est fini )
+	void pass(); // forcer le passage de tour de role (return true si le joueur doit passer et false si le jeu est fini )
 	bool mouvement_legal(int, int);
 	void update_mouvement_legal();
 	void move(int,int);

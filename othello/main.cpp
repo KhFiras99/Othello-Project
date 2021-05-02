@@ -22,11 +22,12 @@ int main()
             cin >> C;
         } while (C > 7);
 
-        table.move(L,C);
-        table.update_mouvement_legal();
+        table.move(L, C);
         table.printBoard();
+
         cout << "Le nombre de mouvements legales pour ce tour est: " << table.getnblegalmove() << endl;
     }
     table.gagnant();
+
     return 0;
 }
