@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Othello.h"
+#include <Windows.h>
 using namespace std;
 
 
@@ -118,12 +119,51 @@ void Othello::gagnant()
 		cout << "Le joueur blanc a gagné avec un score de: " << score_blanc << endl;
 }
 
-void Othello::move(int r, int c) {
+void Othello::goBack(int n_flipped)
+{
+	char color, opp_color;
+
+	system("cls");
+
+	color = turn;
+	(color == noir) ? opp_color = blanc : opp_color = noir;
+
+	int A = 0;
+	do {
+		cout << "Regrettes-tu ton dernier mouvement?" << endl;
+		cout << " 1 : Oui /  0 : Non" << endl;
+		cin >> A;
+	} while (A!=0 && A!=1);
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			board[i][j] = board_previous[i][j];
+		}
+	}
+	if (color == noir) { score_noir -= n_flipped - 1; score_blanc -= n_flipped; }
+	else { score_noir += n_flipped; score_blanc -= n_flipped - 1; }
+
+	if (turn == noir) { turn = blanc; }
+	else { turn = noir; }
+
+	update_mouvement_legal();
+	printBoard();
+}
+
+
+
+int Othello::move(int r, int c) {
 	char color, opp_color;
 	int i, j, n_flipped = 0;
 
 	color = turn;
 	(color == noir) ? opp_color = blanc : opp_color = noir;
+
+	for (int i = 0; i < 8; i++) {
+		for (int j = 0; j < 8; j++) {
+			board_previous[i][j] = board[i][j];
+		}
+	}
 
 	if (!lbord[r][c]) {
 		cout << "Illegal move!" << endl;
@@ -181,6 +221,7 @@ void Othello::move(int r, int c) {
 			}
 
 
+			
 			board[r][c] = color;
 
 			passe_tour();
@@ -200,6 +241,7 @@ void Othello::move(int r, int c) {
 
 
 	//Update turn counter
+	return n_flipped;
 }
 
 void Othello::update_mouvement_legal() {
