@@ -2,4 +2,5 @@
   Player.cpp
   main.cpp
   Génération de code en cours...
-  Othello.vcxproj -> C:\ENSI 2\Othello\Othello-Project\othello\x64\Debug\Othello.exe
+E:\ENSI 2\Othello\Othello-Project\othello\Othello.cpp(340): warning C4172: retourne l'adresse d'une variable locale ou : T temporaire
+  Othello.vcxproj -> E:\ENSI 2\Othello\Othello-Project\othello\x64\Debug\Othello.exe
