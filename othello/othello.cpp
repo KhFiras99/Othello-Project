@@ -123,7 +123,7 @@ void Othello::gagnant()
 		cout << "Le joueur blanc a gagné avec un score de: " << score_blanc << endl;
 }
 
-void Othello::goBack(int n_flipped)
+void Othello::goBack()
 {
 	char color, opp_color;
 
@@ -233,7 +233,7 @@ vector<int> Othello::hint()
 
 
 
-int* Othello::move(int r, int c,int P) {
+int Othello::move(int r, int c,int P) {
 	char color, opp_color;
 	int K = 1;
 	int i, j, n_flipped = 0;
@@ -246,13 +246,13 @@ int* Othello::move(int r, int c,int P) {
 	if (!lbord[r][c]) {
 		cout << "Illegal move!" << endl;
 		K=0;
-		for (int n = 0; n < 8; n++)
-		{
-			for (int m = 0; m < 8; m++) {
-				cout << lbord[n][m];
-			}
-			cout << "\n";
-		}
+		//for (int n = 0; n < 8; n++)
+		//{
+		//	for (int m = 0; m < 8; m++) {
+		//		cout << lbord[n][m];
+		//	}
+		//	cout << "\n";
+		//}
 	}
 	else
 	{	
@@ -401,10 +401,8 @@ int* Othello::move(int r, int c,int P) {
 	}
 
 	// IF WE WANT TO PLACE THE PION IN A PLACE THATS NOT SUPPOSED TO BE TRUE, IT IS EXECUTED. WHICH IS WRONG.
-	int T[2] = { K,n_flipped };
-
 	//Update turn counter
-	return T;
+	return K;
 }
 
 void Othello::update_mouvement_legal(int P) {

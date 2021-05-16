@@ -33,18 +33,19 @@ public:
 	void setDebutant(int x) { debutant = x; }
 	bool checkDebutant() { if (debutant == 1) return true; else return false; }
 	void setBoard(int i, int j) { board[i][j]='-'; }
+	void setnblegalmove_previous(int) { nblegalmoves_previous = 4; };
 	int getnblegalmove() {return nblegalmoves; }
 	void setnblegalmove(int x) { nblegalmoves = x; }
 	int getnblegalmove_previous() { return nblegalmoves_previous; }
 	void passe_tour();  // tour de role 
-	void pass(); // forcer le passage de tour de role (return true si le joueur doit passer et false si le jeu est fini )
+	void pass(); // forcer la fin du jeu
 	bool mouvement_legal(int, int);
 	void update_mouvement_legal(int);
-	int* move(int,int,int);
+	int move(int,int,int);
 	bool jeu_termine(); // declencher la fin du jeu 
 	void printBoard();
 	void gagnant();
-	void goBack(int);
+	void goBack();
 	vector<int> hint();
 };
 

@@ -8,9 +8,7 @@ int main()
     int L, C;
     int A=1;
     int P;
-    int test = 0;
-    int n_flipped;
-
+    
     vector<int> gr;
 
     cout << "----------------------      HELLO USER      ------------------------" << "\n";
@@ -35,9 +33,7 @@ int main()
         while (A != 0) {
 
             while (!table.jeu_termine()) {
-                if (test == 0) cout << "Le nombre de mouvements legales pour ce tour est: " << table.getnblegalmove() << endl;
-                else cout << "Le nombre de mouvements legales pour ce tour est: " << table.getnblegalmove_previous() << endl;
-
+                cout << "Le nombre de mouvements legales pour ce tour est: " << table.getnblegalmove() << endl;
                 do {
                     cout << "Entrez: la ligne :";
                     cin >> L;
@@ -46,12 +42,10 @@ int main()
                     cout << "        la colonne :";
                     cin >> C;
                 } while (C > 7);
-                int* T = table.move(L, C ,1);
+                int K= table.move(L, C ,1);
 
-                n_flipped = T[1];
-                int K = T[0];
                 if (K != 0) {
-                    table.goBack(n_flipped);
+                    table.goBack();
                 }
 
                 table.printBoard();
@@ -90,9 +84,9 @@ int main()
                     cin >> C;
                 } while (C > 7);
 
-                int* T = table.move(L, C, 2);
+                table.move(L, C, 2);
                 system("cls");
-                
+
                 table.printBoard();
 
             }
