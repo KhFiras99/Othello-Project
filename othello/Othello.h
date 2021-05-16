@@ -1,12 +1,13 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
+
 using namespace std;
 #define vide '-'
 #define noir '1'
 #define blanc '2'
 
-#include "Player.h"
 #include "Case.h"
 #ifndef OTHELLO_H
 #define OTHELLO_H
@@ -44,6 +45,7 @@ public:
 	void printBoard();
 	void gagnant();
 	void goBack(int);
+	vector<int> hint();
 };
 
 

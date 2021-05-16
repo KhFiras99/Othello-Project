@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Othello.h"
 #include <Windows.h>
+#include <vector>
 using namespace std;
 
 
@@ -87,13 +88,13 @@ void Othello::printBoard() {
 	cout << endl;
 
 	
-	for (int n = 0; n < 8; n++)
-	{
-		for (int m = 0; m < 8; m++) {
-			cout << lbord[n][m];
-		}
-		cout << "\n";
-	}
+	//for (int n = 0; n < 8; n++)
+	//{
+	//	for (int m = 0; m < 8; m++) {
+	//		cout << lbord[n][m];
+	//	}
+	//	cout << "\n";
+	//}
 
 
 	cout << "                      0  1  2  3  4  5  6  7" << endl;
@@ -162,6 +163,72 @@ void Othello::goBack(int n_flipped)
 
 		nblegalmoves = nblegalmoves_previous;
 	}
+}
+
+vector<int> Othello::hint()
+{
+	int r, c, i, j;
+	char color, opp_color;
+
+	color = turn;
+
+	if (color == noir) {
+		opp_color = blanc;
+	}
+	else
+		opp_color = noir;
+
+	vector<int> gr;
+
+	for (r = 0; r < 8; r++) {
+		for (c = 0; c < 8; c++) {
+			//Check that position is open
+			if (board[r][c].getValue() != '-') continue;	 //check next (r,c)
+			//Check to the left
+			if (c - 2 >= 0 && board[r][c - 1].getValue() == opp_color) {
+				for (j = c - 2; j > 0 && board[r][j].getValue() == opp_color; j--) { ; } //NO_OP	
+				if (board[r][j].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('-'); gr.push_back(r); gr.push_back(c); continue; }
+			}
+			//Check to the right
+			if (c + 2 <= 7 && board[r][c + 1].getValue() == opp_color) {
+				for (j = c + 2; j < 7 && board[r][j].getValue() == opp_color; j++) { ; } //NO_OP	
+				if (board[r][j].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('-'); gr.push_back(r); gr.push_back(c); continue; }
+			}
+			//Check directly up
+			if (r - 2 >= 0 && board[r - 1][c].getValue() == opp_color) {
+				for (i = r - 2; i > 0 && board[i][c].getValue() == opp_color; i--) { ; } //NO_OP	
+				if (board[i][c].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('-'); gr.push_back(r); gr.push_back(c); continue; }
+			}
+			//Check directly down
+			if (r + 2 <= 7 && board[r + 1][c].getValue() == opp_color) {
+				for (i = r + 2; i < 7 && board[i][c].getValue() == opp_color; i++) { ; } //NO_OP	
+				if (board[i][c].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('-'); gr.push_back(r); gr.push_back(c); continue; }
+			}
+			//Check up and to the left
+			if (r - 2 >= 0 && c - 2 >= 0 && board[r - 1][c - 1].getValue() == opp_color) {
+				for (i = r - 2, j = c - 2; i > 0 && j > 0 && board[i][j].getValue() == opp_color; i--, j--) { ; } //NO_OP	
+				if (board[i][j].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('-'); gr.push_back(r); gr.push_back(c); continue; }
+			}
+			//Check up and to the right
+			if (r - 2 >= 0 && c + 2 <= 7 && board[r - 1][c + 1].getValue() == opp_color) {
+				for (i = r - 2, j = c + 2; i > 0 && j < 7 && board[i][j].getValue() == opp_color; i--, j++) { ; } //NO_OP	
+				if (board[i][j].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('-'); gr.push_back(r); gr.push_back(c); continue; }
+			}
+			//Check down and to the left
+			if (r + 2 <= 7 && c - 2 >= 0 && board[r + 1][c - 1].getValue() == opp_color) {
+				for (i = r + 2, j = c - 2; i < 7 && j>0 && board[i][j].getValue() == opp_color; i++, j--) { ; } //NO_OP	
+				if (board[i][j].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('-'); gr.push_back(r); gr.push_back(c); continue; }
+			}
+			//Check down and to the right
+			if (r + 2 <= 7 && c + 2 <= 7 && board[r + 1][c + 1].getValue() == opp_color) {
+				for (i = r + 2, j = c + 2; i < 7 && j < 7 && board[i][j].getValue() == opp_color; i++, j++) { ; } //NO_OP	
+				if (board[i][j].getValue() == color) { lbord[r][c] = true; board[r][c].setValue('-'); gr.push_back(r); gr.push_back(c); continue; }
+			}
+		}
+	}
+	
+	return gr;
+	
 }
 
 
@@ -451,5 +518,7 @@ void Othello::update_mouvement_legal(int P) {
 	}
 
 	nblegalmoves = n_moves;
+
+
 	//return n_moves;
 }

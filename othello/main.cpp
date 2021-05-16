@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Othello.h"
-#include "Player.h"
+#include <vector>
 using namespace std;
 
 int main()
@@ -10,6 +10,8 @@ int main()
     int P;
     int test = 0;
     int n_flipped;
+
+    vector<int> gr;
 
     cout << "----------------------      HELLO USER      ------------------------" << "\n";
     cout << "Tu es invitE, chEre utilisateur A choisir entre:   " << "****      DEBUTANT(1)          ****" << "\n";
@@ -61,6 +63,24 @@ int main()
         while (A != 0) {
 
             while (!table.jeu_termine()) {
+                int M;
+                do {
+                    cout << " Avez-vous besoin d'un hint?     0: NON / 1: OUI " << endl;
+                    cin >> M;
+                } while ((M!=0) & (M!=1));
+                
+                if (M == 1) {
+                    gr = table.hint();
+
+                    cout << "Les mouvements possibles sont:";
+                    int i = 0;
+                    while (i < gr.size() - 1) {
+                        cout << "[" << gr[i] << "," << gr[i + 1] << "]";
+                        i += 2;
+                    }
+                    cout << "\n";
+                }
+               
                 do {
                     cout << "Entrez: la ligne :";
                     cin >> L;
@@ -71,6 +91,7 @@ int main()
                 } while (C > 7);
 
                 int* T = table.move(L, C, 2);
+                system("cls");
                 
                 table.printBoard();
 
