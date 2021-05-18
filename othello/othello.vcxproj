@@ -139,11 +139,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Case.cpp" />
+    <ClCompile Include="Difficulty.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Othello.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Case.h" />
+    <ClInclude Include="Difficulty.h" />
     <ClInclude Include="Othello.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

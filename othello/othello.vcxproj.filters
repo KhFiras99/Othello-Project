@@ -24,12 +24,18 @@
     <ClCompile Include="Othello.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Difficulty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Case.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Othello.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Difficulty.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
