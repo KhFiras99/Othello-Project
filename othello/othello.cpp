@@ -2,6 +2,7 @@
 #include "Othello.h"
 #include <Windows.h>
 #include <vector>
+
 using namespace std;
 
 
@@ -24,9 +25,12 @@ Othello::Othello(int P){
 
 		}
 	}
+
 	turn = noir;
-	score_blanc = 2;
-	score_noir = 2;
+
+	S.setScore_noir(2);
+	S.setScore_blanc(2);
+
 	finished = false;
 
 	if (P == 1) {
@@ -67,11 +71,8 @@ void Othello::passe_tour() {
 	}
 }
 void Othello::pass() {
-	if (nblegalmoves == 0 && nblegalmoves_previous == 0) {
+	if (nblegalmoves == 0) {
 		finished = true;
-	}
-	else if (nblegalmoves == 0) {
-		passe_tour();
 	}
 }
 
@@ -92,7 +93,7 @@ bool Othello::jeu_termine() {
 void Othello::printBoard() {
 
 	cout << "-----------------//            SCORE            -------------------" << endl;
-	cout << "                     Noir:    " << score_noir << "  -  " << score_blanc << "    :Blanc " << endl;
+	cout << "                     Noir:    " << S.getScore_noir() << "  -  " << S.getScore_blanc() << "    :Blanc " << endl;
 	cout << "-------------------------------------------------------------------" << endl;
 	cout << endl;
 	cout << endl;
@@ -120,15 +121,16 @@ void Othello::printBoard() {
 
 void Othello::gagnant()
 {
-	if (score_noir > score_blanc) {
+
+	if (S.getScore_noir() > S.getScore_blanc()) {
 		cout << "Jeu Terminee" << endl;
-		cout << "Le joueur noir a gagne avec un score de: " << score_noir << endl;
+		cout << "Le joueur noir a gagne avec un score de: " << S.getScore_noir() << endl;
 		cout << endl;
 	}
 
 	else {
 		cout << "Jeu Terminee" << endl;
-		cout << "Le joueur blanc a gagne avec un score de: " << score_blanc << endl;
+		cout << "Le joueur blanc a gagne avec un score de: " << S.getScore_blanc() << endl;
 		cout << endl;
 	}
 }
@@ -168,8 +170,12 @@ void Othello::goBack(int n_flipped)
 		if (turn == noir) { turn = blanc; }
 		else { turn = noir; }
 
-		score_noir = score_noir_previous;
-		score_blanc = score_blanc_previous;
+		
+		int B1 = S.getScore_noir_previous();
+		int B2 = S.getScore_blanc_previous();
+
+		S.setScore_noir(B1);
+		S.setScore_blanc(B2);
 
 
 		nblegalmoves = nblegalmoves_previous;
@@ -332,12 +338,16 @@ int* Othello::move(int r, int c, int P) {
 
 				pass();
 
-				score_noir_previous = score_noir;
-				score_blanc_previous = score_blanc;
-
+				
+				S.setScore_noir_previous(S.getScore_noir());
+				S.setScore_blanc_previous(S.getScore_blanc());
+				
+				
+				int A1 = S.getScore_noir();
+				int A2 = S.getScore_blanc();
 				//update number of pieces of each color
-				if (color == noir) { score_noir += n_flipped + 1; score_blanc -= n_flipped; }
-				else { score_noir -= n_flipped; score_blanc += n_flipped + 1; }
+				if (color == noir) { S.setScore_noir(A1 + n_flipped + 1); S.setScore_blanc(A2 - n_flipped); }
+				else { S.setScore_noir(A1 - n_flipped); S.setScore_blanc(A2 + n_flipped + 1); }
 			}
 		}
 		else {
@@ -394,12 +404,15 @@ int* Othello::move(int r, int c, int P) {
 
 				pass();
 
-				score_noir_previous = score_noir;
-				score_blanc_previous = score_blanc;
+				S.setScore_noir_previous(S.getScore_noir());
+				S.setScore_blanc_previous(S.getScore_blanc());
 
+				int A1 = S.getScore_noir();
+				int A2 = S.getScore_blanc();
 				//update number of pieces of each color
-				if (color == noir) { score_noir += n_flipped + 1; score_blanc -= n_flipped; }
-				else { score_noir -= n_flipped; score_blanc += n_flipped + 1; }
+				if (color == noir) { S.setScore_noir(A1 + n_flipped +1); S.setScore_blanc(A2 - n_flipped); }
+				else { S.setScore_noir(A1 - n_flipped); S.setScore_blanc(A2 + n_flipped +1); }
+
 
 			}
 

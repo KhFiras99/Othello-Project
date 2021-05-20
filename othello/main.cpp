@@ -39,7 +39,7 @@ int main()
 
         table.setnblegalmove(4);
 
-        if (table.getDiff() == 1) {
+        if (table.getDifficulty() == 1) {
 
             while (!table.jeu_termine()) {
                 if (test == 0) cout << "Le nombre de mouvements legales pour ce tour est: " << table.getnblegalmove() << endl;
@@ -68,7 +68,7 @@ int main()
         }
 
         else {
-            if (table.getDiff() == 2) {
+            if (table.getDifficulty() == 2) {
 
                 while (!table.jeu_termine()) {
 

@@ -142,11 +142,13 @@
     <ClCompile Include="Difficulty.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Othello.cpp" />
+    <ClCompile Include="Score.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Case.h" />
     <ClInclude Include="Difficulty.h" />
     <ClInclude Include="Othello.h" />
+    <ClInclude Include="Score.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
